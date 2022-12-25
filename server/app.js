@@ -1,13 +1,17 @@
 import express from "express";
 import cors from "cors";
+import Inventory from "./db.js";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 const port = 3001;
 
-app.get("/addresses", async (req, res) => {
-  return res.send(await web3.getAccounts());
+app.get("/inventory", (req, res) => {
+  Inventory.find({}, (err, inventory) => {
+    console.log(inventory);
+    return res.send(inventory);
+  });
 });
 
 app.get("/balance/:address", async (req, res) => {
